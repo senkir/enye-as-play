@@ -8,8 +8,18 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
         <script src="@routes.Assets.at("javascripts/hello.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("components/webcomponentsjs/webcomponents-min.js")" type="text/javascript"></script>
+        <link rel="import" href="@routes.Assets.at("components/core-scaffold/core-scaffold.html")"></link>
     </head>
     <body>
-        @content
+    <core-scaffold>
+        <core-toolbar> Applications</core-toolbar>
+        <core-menu theme="core-light-theme">
+            <core-item icon="settings" label="item 1"></core-item>
+        </core-menu>
+        <div>
+            @content
+        </div>
+    </core-scaffold>
     </body>
 </html>
