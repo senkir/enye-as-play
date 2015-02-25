@@ -9,24 +9,27 @@ import play.db.ebean.Model
 import play.db.ebean.Model.Finder
 
 import scala.Long
+import scala.collection.mutable.ListBuffer
 
 /**
+ * A released application
  * Created by tcastillo on 2/12/15.
  */
 @Entity
-class MobileApplication extends Model {
 
-  @Id
-  var id: Long = 0
+object MobileApplication {
+  var apps:List[MobileApplication] = List(new MobileApplication("kelvim", 0))
 
-  @Constraints.Required
-  var name: String = null
-  var versionName: String = null
-  @Formats.DateTime(pattern="dd/MM/YYY")
-  var updatedAt: String = null
-  @Formats.DateTime(pattern="dd/MM/YYY")
-  var createdAt: String = null
+  var find: Model.Finder[Long,MobileApplication] = new Finder[Long,MobileApplication](classOf[Long], classOf[MobileApplication])
+}
 
-  def find: Model.Finder[Long,MobileApplication] = new Finder[Long,MobileApplication](classOf[Long], classOf[MobileApplication])
+
+class MobileApplication(@Constraints.Required var name: String,
+                       @Id var id: Long = 0,
+                       @Constraints.Required var platform: String = "Android",
+                       var versionName: String = null,
+                       var preview: Boolean = false,
+                       @Formats.DateTime(pattern="dd/MM/YYY") var updatedAt: String = null,
+                       @Formats.DateTime(pattern="dd/MM/YYY") var createdAt: String = null) extends Model {
 
 }
