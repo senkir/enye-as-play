@@ -1,7 +1,9 @@
-@(message: String)
+@(message: String, latest: MobileApplication)
 
-@main("Welcome to Play") {
-
-    @play20.welcome(message)
-
+@main(message, "Home") {
+    @if(latest != null) {
+        @primary(latest)
+    } else {
+    <h1>No Data</h1>
+    }
 }

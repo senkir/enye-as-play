@@ -1,8 +1,10 @@
-name := """play-scala"""
+import play.PlayScala
+
+name := "play-scala"
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala, net.litola.SassPlugin)
+lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.1"
 
@@ -10,7 +12,8 @@ libraryDependencies ++= Seq(
   jdbc,
   anorm,
   cache,
-  ws
+  ws,
+  "com.typesafe.slick" %% "slick" % "2.1.0",
+  "org.slf4j" % "slf4j-nop" % "1.6.4",
+  "com.typesafe.play" %% "play-slick" % "0.8.1"
 )
-
-libraryDependencies += javaEbean

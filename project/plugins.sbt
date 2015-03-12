@@ -19,4 +19,10 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-digest" % "1.0.0")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-mocha" % "1.0.0")
 
-addSbtPlugin("net.litola" % "play-sass" % "0.4.0")
+//addSbtPlugin("net.litola" % "play-sass" % "0.4.0")
+
+//addSbtPlugin("com.typesafe.play" %% "play-slick" % "0.8.1")
+
+resolvers += Resolver.url("GitHub repository", url("http://shaggyyeti.github.io/releases"))(Resolver.ivyStylePatterns)
+
+addSbtPlugin("default" % "sbt-sass" % "0.1.9")

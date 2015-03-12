@@ -1,0 +1,13 @@
+@(model: String, applications: scala.collection.mutable.Buffer[MobileApplication])
+
+@main(model, model) {
+<ul>
+
+    @applications.map { app =>
+        <li>
+            @app.name
+        </li>
+    }
+</ul>
+
+}
