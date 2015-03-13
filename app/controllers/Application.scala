@@ -14,5 +14,8 @@ object Application extends Controller {
     Ok(views.html.index("Enye Interactive",enyeApp))
   }
 
+  def:w
+
+
 
 }
