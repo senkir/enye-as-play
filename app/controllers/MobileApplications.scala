@@ -8,28 +8,32 @@ import scala.collection.JavaConverters._
  */
 object MobileApplications extends Controller {
 
-  def list = Action {
+  def list = Action { request =>
 //    val apps = models.MobileApplication.find.all().asScala
-    Ok{views.html.mobileApplicationsList("MobileApplication", null)}
+   NotImplemented
   }
 
-  def show(id: Long) = Action {
-    Ok{views.html.mobileApplicationsList("MobileApplication", null)}
-      
+  def show(id: Long) = Action {request =>
+
+    NotImplemented
   }
 
-  def create = Action {
- Ok{views.html.mobileApplicationsList("MobileApplication", null)}
-    
+  def create = Action {request =>
+
+    NotImplemented
   }
 
-  def update(id: Long) = Action {
- Ok{views.html.mobileApplicationsList("MobileApplication", null)}
-    
+  def edit(id: Long) = Action{ request =>
+    NotImplemented
   }
 
-  def delete(id: Long) = Action {
-  Ok{views.html.mobileApplicationsList("MobileApplication", null)}
-       
+  def update(id: Long) = Action {request =>
+
+    NotImplemented
+  }
+
+  def delete(id: Long) = Action { request =>
+
+    NotImplemented 
   }
 }
