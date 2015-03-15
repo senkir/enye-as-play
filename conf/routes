@@ -9,10 +9,10 @@ GET     /                           controllers.Application.index
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 
-GET /mobileApplications             controllers.MobileApplications.list
-GET /mobileApplications/:id         controllers.MobileApplications.show(id: Long)
-GET /mobileApplications/:id/edit    controllers.MobileApplications.edit(id: Long)
-PUT /mobileApplications/:id         controllers.MobileApplications.update(id: Long)
+GET /products             controllers.Products.list
+GET /products/:id         controllers.MobileApplications.show(id: Long)
+GET /products/:id/edit    controllers.MobileApplications.edit(id: Long)
+PUT /products/:id         controllers.MobileApplications.update(id: Long)
 
 GET /privacyPolicy                  controllers.Pages.privacyPolicy()
 
