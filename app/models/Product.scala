@@ -1,23 +1,10 @@
 package models
 
-import models.Products
-
+import play.api.Play.current
 import play.api.db.slick.Config.driver.simple._
 import play.api.db.slick.DB
-import scala.slick.session.Session
+import models.database.Products
 
-case class Product(id: Option[Long], name: String)
+object Product extends TableQuery(new Products(_)) {
 
-
-object Product {
-
-  val table = new Products
-
-  def find: List[(Long, String)] = DB.withSession { implicit session: Session =>
-    Query(table).list
-  }
-
-  def findNames: List[String] = Db.withSession { implicit session: Session =>
-    Query(table).map(_.name).list
-  }
 }

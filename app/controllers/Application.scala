@@ -2,15 +2,15 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import models.MobileApplication
+import models.database.Products
+import scala.slick.lifted.TableQuery
 
 object Application extends Controller {
 
-  def index = Action {
-//    val latest = models.MobileApplication.find.all().get(0)
-//    TODO: stub data
-    var app = MobileApplication.apps
-    Ok(views.html.index("Enye Interactive",app.get(0)))
+  def home = Action { implicit rs =>
+    val products = TableQuery[Products]
+    var app = products.find
+    Ok(views.html.index("Enye Interactive",app(0)))
   }
 
 }
