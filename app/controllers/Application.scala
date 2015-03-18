@@ -7,9 +7,9 @@ import scala.slick.lifted.TableQuery
 
 object Application extends Controller {
 
-  def home = Action { implicit rs =>
+  def home = Action { request =>
     val products = TableQuery[Products]
-    var app = products.find
+    var app = products.all
     Ok(views.html.index("Enye Interactive",app(0)))
   }
 
