@@ -1,13 +1,14 @@
-@(model: String, applications: scala.collection.mutable.Buffer[Product])
+@(model: String, app: Product)
 
 @main(model, model) {
 <ul>
-
-    @applications.map { app =>
-        <li>
-            @app.name
-        </li>
+    @if(app != null) {
+        @app.toString
+    } else { 
+        <b>no data</b>
     }
+    
+
 </ul>
 
 }

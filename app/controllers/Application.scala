@@ -2,15 +2,21 @@ package controllers
 
 import play.api._
 import play.api.mvc._
-import models.database.Products
+import models.Products
 import scala.slick.lifted.TableQuery
+import play.api.db.slick.Config.driver.simple._
+import play.api.db.slick._
+import play.api.Play.current
+
 
 object Application extends Controller {
 
-  def home = Action { request =>
-    val products = TableQuery[Products]
-    var app = products.all
-    Ok(views.html.index("Enye Interactive",app(0)))
+  val products = TableQuery[Products]
+  
+  def home = DBAction { implicit rs =>
+    val app = products.list
+    Ok(views.html.index("Enye Interactive",app))
   }
+
 
 }

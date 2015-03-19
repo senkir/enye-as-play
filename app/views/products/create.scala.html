@@ -1,0 +1,11 @@
+@(form: Form[Products.ProductFormModel])
+
+<h1>Create</h1
+   
+
+    @helper.form(action = routes.Products.submit) {
+        
+        @helper.inputText(form("name"))
+        @helper.inputText(form("platform"))
+        <button type="submit" name="submit" id="submit">Submit</button>
+    }

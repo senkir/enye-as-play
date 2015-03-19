@@ -1,14 +1,22 @@
-@(app: Product)
+@(apps: List[Product])
 
 <br/>
 
 <div id="primary">
     Primary Element
-    <img id="banner" src="@routes.Assets.at("images/screenshots/kelvim-blue.png")"></img>
+    <img id="banner" src="@routes.Assets.at("product/kelvim-feature-graphic.jpg")"></img>
     <br/>
-    @app.name
-    @app.platform
+    content = @apps.toString()
 
+    <br/>
+    @if(apps != null && !apps.isEmpty) {
+        @for(app <- apps) {
+            <ul>
+                <li>@app.toString()</li>
+            </ul>
+        }} else {
+            no data.
+        }
 
     <br/>
     Available in the play store

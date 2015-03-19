@@ -3,16 +3,19 @@
 # ~~~~
 
 # Home page
-GET     /                           controllers.Application.index
+GET     /                           controllers.Application.home
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 
 GET /products             controllers.Products.list
-GET /products/:id         controllers.MobileApplications.show(id: Long)
-GET /products/:id/edit    controllers.MobileApplications.edit(id: Long)
-PUT /products/:id         controllers.MobileApplications.update(id: Long)
+GET /products/create      controllers.Products.create
+POST /products/create      controllers.Products.submit
+GET /products/:id         controllers.Products.show(id: Long)
+GET /products/:id/edit    controllers.Products.edit(id: Long)
+PUT /products/:id         controllers.Products.update(id: Long)
+
 
 GET /privacyPolicy                  controllers.Pages.privacyPolicy()
 
