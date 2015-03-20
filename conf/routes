@@ -9,12 +9,17 @@ GET     /                           controllers.Application.home
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 
-GET /products             controllers.Products.list
-GET /products/create      controllers.Products.create
-POST /products/create      controllers.Products.submit
-GET /products/:id         controllers.Products.show(id: Long)
-GET /products/:id/edit    controllers.Products.edit(id: Long)
-PUT /products/:id         controllers.Products.update(id: Long)
+GET /products             controllers.ProductsController.list
+GET /products/new         controllers.ProductsController.create
+POST /products/new        controllers.ProductsController.submit
+GET /products/:id         controllers.ProductsController.show(id: Long)
+GET /products/:id/edit    controllers.ProductsController.edit(id: Long)
+PUT /products/:id         controllers.ProductsController.update(id: Long)
+DELETE /products/:id      controllers.ProductsController.delete(id: Long)
+
+
+
+PUT /products/:id         controllers.ProductsController.update(id: Long)
 
 
 GET /privacyPolicy                  controllers.Pages.privacyPolicy()

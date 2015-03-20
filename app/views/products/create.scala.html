@@ -1,11 +1,15 @@
-@(form: Form[Products.ProductFormModel])
+@(productForm: Form[ProductsController.ProductData])
 
-<h1>Create</h1
+<h1>Create</h1>
    
 
-    @helper.form(action = routes.Products.submit) {
+    @import helper._
+
+    @helper.form(action = routes.ProductsController.create) {
         
-        @helper.inputText(form("name"))
-        @helper.inputText(form("platform"))
-        <button type="submit" name="submit" id="submit">Submit</button>
+        @inputText(productForm("name"))
+        @inputText(productForm("platform"))
+        @inputText(productForm("version"))
+        @inputText(productForm("description"))
+        <input type="submit" value="Submit">
     }

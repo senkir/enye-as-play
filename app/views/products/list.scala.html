@@ -1,0 +1,10 @@
+@(products: List[Product])
+
+@if(products.isEmpty) {
+    <b>no data</b>
+}
+@for(product <- products) {
+    <div id="product-card">
+       @product.name 
+    <div>
+}
