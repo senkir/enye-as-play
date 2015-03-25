@@ -10,6 +10,7 @@ import play.api.data._
 import play.api.data.Forms._
 import models._
 import play.api.Play.current
+import play.api.mvc.Flash
 
 /**
  * Created by tcastillo on 2/26/15.
@@ -19,10 +20,10 @@ object ProductsController extends Controller {
 
   val productForm = Form(
     mapping(
-      "name" -> text,
-      "platform" -> text,
-      "version" -> text,
-      "description" -> text
+      "name" -> nonEmptyText,
+      "platform" -> nonEmptyText,
+      "version" -> nonEmptyText,
+      "description" -> nonEmptyText
     )(ProductData.apply)(ProductData.unapply)
   )
 
@@ -33,21 +34,28 @@ object ProductsController extends Controller {
     Ok(views.html.products.list(allProducts))
   }
 
-  def create = Action {request =>
-    Ok(views.html.products.create(productForm))
+  def create = Action { request =>
+    val form = if (request.flash.get("error").isDefined)
+      productForm.bind(request.flash.data)
+    else
+      productForm
+    Ok(views.html.products.create(form)(request.flash))
   }
 
   def submit = DBAction { implicit request =>
     //bind form request
-    productForm.bindFromRequest().fold(
-      formWithErrors => {
-        BadRequest(views.html.products.create(formWithErrors))
+    val newForm = productForm.bindFromRequest()
+    newForm.fold(
+      hasErrors = { form =>
+        Redirect(routes.ProductsController.create()).flashing(Flash(form.data) +
+          ("error" -> "something bad happened"))
       },
-      productData => {
+      success = { productData =>
         //success
         val newProduct = Product(None, productData.name, productData.platform, productData.version, productData.desc, "2014-07-09", "2014-07-09")
         products += newProduct
-        Redirect(routes.ProductsController.list)
+        Redirect(routes.ProductsController.list).
+          flashing("success" -> "success!")
       })
   }
 
@@ -56,13 +64,26 @@ object ProductsController extends Controller {
     Ok(views.html.products.show(product))
   }
 
-  def edit(id: Long) = Action{ request =>
-    NotImplemented
+  def edit(id: Long) = DBAction{ implicit request =>
+    val product = products.filter(_.id === id).first
+    val filledData = new ProductData(product.name, product.platform, product.version, product.description)
+    val filledForm = productForm.fill(filledData)
+    Ok(views.html.products.edit(product,filledForm))
   }
 
-  def update(id: Long) = Action {request =>
-
-    NotImplemented
+  def update(id: Long) = DBAction {implicit request =>
+    productForm.fold(
+    hasErrors = { form =>
+      Redirect(routes.ProductsController.edit(id)).flashing(Flash(form.data) +
+        ("error" -> "something bad happened"))
+    }, 
+    success = { productData =>
+      var product = products.filter(_.id === id).first
+      product.name = productData.name
+      products.save(product)
+      Ok(views.html.products.show(product.id))
+    })
+      
   }
 
   def delete(id: Long) = Action { request =>

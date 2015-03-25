@@ -1,0 +1,12 @@
+@(product: Product, productForm: Form[ProductsController.ProductData])(implicit flash: Flash)
+
+<h1>Edit</h1>
+    @import helper._
+
+    @helper.form(action = routes.ProductsController.update(product.id)) {
+    @inputText(productForm("name"))
+    @inputText(productForm("platform"))
+    @inputText(productForm("version"))
+    @inputText(productForm("description"))
+    <input type="submit" value="Save">
+    }

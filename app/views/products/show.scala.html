@@ -2,4 +2,14 @@
 
 <h1>show</h1>
 
+<ul>
+    <li>@product.name</li>
+    <li>@product.platform</li>
+    <li>@product.version</li>
+    <li>@product.description</li>
+</ul>
 
+<form method="action" action="@routes.ProductsController.edit(product.id.get)">
+    <button type="submit">Edit</button> 
+</form>
+        

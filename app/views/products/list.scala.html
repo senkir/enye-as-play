@@ -1,10 +1,14 @@
-@(products: List[Product])
+@(products: List[Product])(implicit flash: Flash)
 
+@main("Products", "Products"){
 @if(products.isEmpty) {
     <b>no data</b>
 }
 @for(product <- products) {
     <div id="product-card">
-       @product.name 
+        @product.name <a href="@routes.ProductsController.show(product.id.get)">show</a>
     <div>
+}
+
+@footer()
 }

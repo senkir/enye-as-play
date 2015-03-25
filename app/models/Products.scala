@@ -3,8 +3,7 @@ package models
 import play.api.db.slick.Config.driver.simple._
 import scala.slick.jdbc.JdbcBackend
 
-case class Product(id: Option[Long], name: String, platform: String, version: String, description: String, updatedAt: String, createdAt: String)
-
+case class Product(id: Option[Long], name: String, platform: String, version: String, description: String, updatedAt: String, createdAt: String) 
 /**
  * A released application
  * Created by tcastillo on 2/12/15.

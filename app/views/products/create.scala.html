@@ -1,11 +1,11 @@
-@(productForm: Form[ProductsController.ProductData])
+@(productForm: Form[ProductsController.ProductData])(implicit flash: Flash)
 
 <h1>Create</h1>
    
 
     @import helper._
 
-    @helper.form(action = routes.ProductsController.create) {
+    @helper.form(action = routes.ProductsController.submit) {
         
         @inputText(productForm("name"))
         @inputText(productForm("platform"))
@@ -13,3 +13,16 @@
         @inputText(productForm("description"))
         <input type="submit" value="Submit">
     }
+
+    <div class="container">
+        @if(flash.get("success").isDefined) {
+            <div class="alert alert-success">
+                @flash.get("success")
+            </div>
+        }
+
+        @if(flash.get("error").isDefined) {
+        <div class="alert alert-error">
+            @flash.get("error")
+        </div>
+        }
