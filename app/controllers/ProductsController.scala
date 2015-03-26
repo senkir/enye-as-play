@@ -27,10 +27,8 @@ object ProductsController extends Controller {
     )(ProductData.apply)(ProductData.unapply)
   )
 
-  val products = TableQuery[Products]
-
   def list = DBAction { implicit request =>
-    val allProducts = products.list
+    val allProducts = Model.products.list
     Ok(views.html.products.list(allProducts))
   }
 
@@ -53,19 +51,19 @@ object ProductsController extends Controller {
       success = { productData =>
         //success
         val newProduct = Product(None, productData.name, productData.platform, productData.version, productData.desc, "2014-07-09", "2014-07-09")
-        products += newProduct
+        Model.products += newProduct
         Redirect(routes.ProductsController.list).
           flashing("success" -> "success!")
       })
   }
 
   def show(id: Long) = DBAction { implicit request =>
-    val product = products.filter(_.id === id).first
+    val product = Model.products.filter(_.id === id).first
     Ok(views.html.products.show(product))
   }
 
   def edit(id: Long) = DBAction{ implicit request =>
-    val product = products.filter(_.id === id).first
+    val product = Model.products.filter(_.id === id).first
     val filledData = new ProductData(product.name, product.platform, product.version, product.description)
     val filledForm = productForm.fill(filledData)
     Ok(views.html.products.edit(product,filledForm))
@@ -78,10 +76,10 @@ object ProductsController extends Controller {
         ("error" -> "something bad happened"))
     }, 
     success = { productData =>
-      val product = products.filter(_.id === id)
+      Model.products.filter(_.id === id)
         .map(p => ( p.name, p.platform, p.version, p.description, p.updatedAt))
         .update((productData.name, productData.platform, productData.version, productData.desc, "2015-01-01"))
-      Ok(views.html.products.show(product.id))
+      Redirect(views.html.products.show(id))
     })
       
   }
