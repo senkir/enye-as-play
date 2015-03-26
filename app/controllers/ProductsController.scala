@@ -78,9 +78,9 @@ object ProductsController extends Controller {
         ("error" -> "something bad happened"))
     }, 
     success = { productData =>
-      var product = products.filter(_.id === id).first
-      product.name = productData.name
-      products.save(product)
+      val product = products.filter(_.id === id)
+        .map(p => ( p.name, p.platform, p.version, p.description, p.updatedAt))
+        .update((productData.name, productData.platform, productData.version, productData.desc, "2015-01-01"))
       Ok(views.html.products.show(product.id))
     })
       
