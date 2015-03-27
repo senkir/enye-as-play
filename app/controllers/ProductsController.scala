@@ -11,19 +11,20 @@ import play.api.data.Forms._
 import models._
 import play.api.Play.current
 import play.api.mvc.Flash
+import java.sql.Timestamp
 
 /**
  * Created by tcastillo on 2/26/15.
  */
 object ProductsController extends Controller {
-  case class ProductData(name: String, platform: String, version: String, desc: String)
+  case class ProductData(name: String, platformId: Long, version: String, desc: Option[String])
 
   val productForm = Form(
     mapping(
       "name" -> nonEmptyText,
-      "platform" -> nonEmptyText,
+      "platformId" -> longNumber,
       "version" -> nonEmptyText,
-      "description" -> nonEmptyText
+      "description" -> optional(text)
     )(ProductData.apply)(ProductData.unapply)
   )
 
@@ -50,7 +51,7 @@ object ProductsController extends Controller {
       },
       success = { productData =>
         //success
-        val newProduct = Product(None, productData.name, productData.platform, productData.version, productData.desc, "2014-07-09", "2014-07-09")
+        val newProduct = Model.Product(None, productData.name, productData.platformId, productData.version, productData.desc, None, None)
         Model.products += newProduct
         Redirect(routes.ProductsController.list).
           flashing("success" -> "success!")
@@ -64,7 +65,7 @@ object ProductsController extends Controller {
 
   def edit(id: Long) = DBAction{ implicit request =>
     val product = Model.products.filter(_.id === id).first
-    val filledData = new ProductData(product.name, product.platform, product.version, product.description)
+    val filledData = new ProductData(product.name, product.platformId, product.version, product.description)
     val filledForm = productForm.fill(filledData)
     Ok(views.html.products.edit(product,filledForm))
   }
@@ -77,8 +78,8 @@ object ProductsController extends Controller {
     }, 
     success = { productData =>
       Model.products.filter(_.id === id)
-        .map(p => ( p.name, p.platform, p.version, p.description, p.updatedAt))
-        .update((productData.name, productData.platform, productData.version, productData.desc, "2015-01-01"))
+        .map(p => ( p.name, p.platformId, p.version, p.description, p.updatedAt, p.createdAt))
+        .update((productData.name, productData.platformId, productData.version, productData.desc, Some(new Timestamp(System.currentTimeMillis))), None)
       Redirect(views.html.products.show(id))
     })
       
