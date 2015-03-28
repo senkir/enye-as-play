@@ -6,6 +6,6 @@ import play.api.db.slick.Config.driver.simple._
 
 object SeedController extends Controller {
   def ask = Action { request =>
-    Ok(views.html.extras.ask)
+    Ok(views.html.extras.ask())
   }
 }

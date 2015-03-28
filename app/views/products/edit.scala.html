@@ -3,7 +3,7 @@
 <h1>Edit</h1>
     @import helper._
 
-    @helper.form(action = routes.ProductsController.update(product.id)) {
+    @helper.form(action = routes.ProductsController.update(product.id.get)) {
     @inputText(productForm("name"))
     @inputText(productForm("platform"))
     @inputText(productForm("version"))

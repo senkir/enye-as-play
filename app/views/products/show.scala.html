@@ -1,10 +1,12 @@
-@(product: Product)
+@(product: Product, platform: Platform)
 
 <h1>show</h1>
 
 <ul>
     <li>@product.name</li>
-    <li>@product.platform</li>
+    @if(platform != null) {
+        <li>@platform.name</li>
+    }
     <li>@product.version</li>
     <li>@product.description</li>
 </ul>

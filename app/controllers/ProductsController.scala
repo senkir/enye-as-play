@@ -51,7 +51,7 @@ object ProductsController extends Controller {
       },
       success = { productData =>
         //success
-        val newProduct = Model.Product(None, productData.name, productData.platformId, productData.version, productData.desc, None, None)
+        val newProduct = Product(None, productData.name, productData.platformId, productData.version, productData.desc, None, None)
         Model.products += newProduct
         Redirect(routes.ProductsController.list).
           flashing("success" -> "success!")
@@ -60,7 +60,8 @@ object ProductsController extends Controller {
 
   def show(id: Long) = DBAction { implicit request =>
     val product = Model.products.filter(_.id === id).first
-    Ok(views.html.products.show(product))
+    val platform = Model.platforms.filter(_.id === product.platformId).first
+    Ok(views.html.products.show(product, platform))
   }
 
   def edit(id: Long) = DBAction{ implicit request =>
@@ -79,8 +80,8 @@ object ProductsController extends Controller {
     success = { productData =>
       Model.products.filter(_.id === id)
         .map(p => ( p.name, p.platformId, p.version, p.description, p.updatedAt, p.createdAt))
-        .update((productData.name, productData.platformId, productData.version, productData.desc, Some(new Timestamp(System.currentTimeMillis))), None)
-      Redirect(views.html.products.show(id))
+        .update(productData.name, productData.platformId, productData.version, productData.desc, Some(new Timestamp(System.currentTimeMillis)), None)
+      Redirect(routes.ProductsController.show(id))
     })
       
   }
