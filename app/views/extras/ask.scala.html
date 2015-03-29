@@ -1,8 +1,25 @@
-<link rel="import" href="@routes.Assets.at("components/paper-button-base/paper-button-base.html")"></link>
-@main("Seeds", "Seeds") {
-<div style="width 100px: height: 100px:">
-    <paper-shadow z="2">
-    <paper-button raised>Apply Seed Data</paper-button>
-    </paper-shadow>
+@(implicit flash: Flash)
+@main("Seeds", "Seeds"){
+
+<div class="flash-container">
+    @if(flash.get("success").isDefined) {
+        <div class="alert alert-success">
+            @flash.get("success")
+        </div>
+    }
+
+    @if(flash.get("error").isDefined) {
+        <div class="alert alert-error">
+            @flash.get("error")
+        </div>
+    }
 </div>
+
+<div id="seed-button" >
+        <paper-button raised onclick="@routes.SeedController.apply()">Apply Seed Data</paper-button>
+</div>
+}{
+<link rel="import" href="@routes.Assets.at("components/paper-button/paper-button.html")"></link>
+<link rel="import" href="@routes.Assets.at("components/paper-shadow/paper-shadow.html")"></link>
 }
+
