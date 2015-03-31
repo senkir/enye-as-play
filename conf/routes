@@ -18,6 +18,7 @@ PUT /products/:id         controllers.ProductsController.update(id: Long)
 DELETE /products/:id      controllers.ProductsController.delete(id: Long)
 
 GET /extras/seed          controllers.SeedController.ask
+GET /extras/apply         controllers.SeedController.apply
 
 
 PUT /products/:id         controllers.ProductsController.update(id: Long)
