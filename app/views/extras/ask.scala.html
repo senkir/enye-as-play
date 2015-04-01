@@ -3,11 +3,16 @@
 
 <polymer-element name="link-button">
     <template> 
-        <paper-button raised id="apply" attributes="link" on-tap="{{ goLink }}"></paper-button>
+    <paper-button 
+        raised 
+        id="apply" 
+        link="@routes.SeedController.apply"
+        on-click="{{ goLink }}">
+        Apply
+    </paper-button>
     </template>
     <script>
         Polymer('link-button', {
-            this.link = "http://google.com"
             goLink: function(e) {
                 window.location.href = e.target.getAttribute('link');
             }
@@ -29,11 +34,12 @@
         </div>
     }
 </div>
-<link-button link="@routes.SeedController.apply()">Test</link-button>
 <br/>
-<paper-button raised>
-      <a href="@routes.SeedController.apply()">link</a>
-</paper-button>
+<div>
+    <link-button class="seed-button"></link-button>
+</div>
+<br/>
+
 }{
 <link rel="import" href="@routes.Assets.at("components/paper-button/paper-button.html")"></link>
 <link rel="import" href="@routes.Assets.at("components/paper-shadow/paper-shadow.html")"></link>

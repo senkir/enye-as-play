@@ -1,4 +1,4 @@
-@(productForm: Form[ProductsController.ProductData])(implicit flash: Flash)
+@(productForm: Form[ProductsController.ProductData], platforms: Seq[(String,String)])(implicit flash: Flash)
 
 <h1>Create</h1>
    
@@ -8,7 +8,12 @@
     @helper.form(action = routes.ProductsController.submit) {
         
         @inputText(productForm("name"))
-        @inputText(productForm("platform"))
+        <!-- @inputText(productForm("platform")) -->
+        @select(
+            productForm("platform"), 
+            options = platforms,
+            '_label -> "Platforms"
+        )
         @inputText(productForm("version"))
         @inputText(productForm("description"))
         <input type="submit" value="Submit">

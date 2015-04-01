@@ -12,6 +12,7 @@ import models._
 import play.api.Play.current
 import play.api.mvc.Flash
 import java.sql.Timestamp
+import play.api.Logger
 
 /**
  * Created by tcastillo on 2/26/15.
@@ -21,9 +22,9 @@ object ProductsController extends Controller {
 
   val productForm = Form(
     mapping(
-      "name" -> nonEmptyText,
+      "name" -> text,
       "platformId" -> longNumber,
-      "version" -> nonEmptyText,
+      "version" -> text,
       "description" -> optional(text)
     )(ProductData.apply)(ProductData.unapply)
   )
@@ -33,12 +34,25 @@ object ProductsController extends Controller {
     Ok(views.html.products.list(allProducts))
   }
 
-  def create = Action { request =>
+  def getPlatformsSeq(implicit session:Session) = {
+    val platforms = Model.platforms.list
+    var toReturn = Seq[(String,String)]()
+    var x = 0
+    for ( x <- 0 to platforms.size - 1) {
+      var platform = platforms(x)
+      toReturn = toReturn :+ x.toString -> platforms(x).name
+    }
+    toReturn
+  }
+
+  def create = DBAction { implicit request =>
+    val platforms = getPlatformsSeq
+
     val form = if (request.flash.get("error").isDefined)
       productForm.bind(request.flash.data)
     else
       productForm
-    Ok(views.html.products.create(form)(request.flash))
+    Ok(views.html.products.create(form,platforms)(request.flash))
   }
 
   def submit = DBAction { implicit request =>
@@ -46,6 +60,7 @@ object ProductsController extends Controller {
     val newForm = productForm.bindFromRequest()
     newForm.fold(
       hasErrors = { form =>
+        Logger.debug(newForm.errors.toString)
         Redirect(routes.ProductsController.create()).flashing(Flash(form.data) +
           ("error" -> "something bad happened"))
       },
