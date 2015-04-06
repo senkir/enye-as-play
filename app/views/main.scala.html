@@ -1,4 +1,4 @@
-@(title: String, actionBarTitle: String)(content: Html)(header: Html = null)
+@(title: String, actionBarTitle: String)(header: Html = null)(content: Html)
 
 <!DOCTYPE html>
 
@@ -13,14 +13,34 @@
     </head>
     <body>
     <core-scaffold>
-        <core-toolbar> @actionBarTitle </core-toolbar>
-        <core-menu theme="core-light-theme">
-            <core-item name="thing"></core-item>
-            
-        </core-menu>
-        <div>
+        <core-header-panel navigation flex >
+            <nav>
+            <core-toolbar tool flex> 
+                <div flex>
+                    @actionBarTitle
+                </div>
+            </core-toolbar>
+            <core-menu theme="core-light-theme" selected="0">
+                <paper-item noink>
+                    <core-icon icon="label-outline"></core-icon>
+                    <a href="#one">Single</a>
+                </paper-item>
+
+                <paper-item noink>
+                    <core-icon icon="label-outline"></core-icon>
+                    <a href="#two">Double</a>
+                </paper-item>
+            </core-menu>
+            </nav>
+        </core-header-panel>
+        <div tool>
+            @actionBarTitle
+            <core-icon-button icon="settings" flex></core-icon-button>
+        </div>
+        <div layout center-center fit>
             @content
         </div>
+        @footer()
     </core-scaffold>
     </body>
 </html>

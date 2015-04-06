@@ -18,13 +18,13 @@ import play.api.Logger
  * Created by tcastillo on 2/26/15.
  */
 object ProductsController extends Controller {
-  case class ProductData(name: String, platformId: Long, version: String, desc: Option[String])
+  case class ProductData(name: String, platformId: Seq[(String)], version: String, desc: Option[String])
 
   val productForm = Form(
     mapping(
-      "name" -> text,
-      "platformId" -> longNumber,
-      "version" -> text,
+      "name" -> nonEmptyText,
+      "platformId[]" -> seq(text),
+      "version" -> nonEmptyText,
       "description" -> optional(text)
     )(ProductData.apply)(ProductData.unapply)
   )
@@ -58,15 +58,19 @@ object ProductsController extends Controller {
   def submit = DBAction { implicit request =>
     //bind form request
     val newForm = productForm.bindFromRequest()
+    Logger.debug(s"Forms newForm=${newForm.toString}")
     newForm.fold(
       hasErrors = { form =>
-        Logger.debug(newForm.errors.toString)
+        val firstError = newForm.errors(0)
+        Logger.debug(s"Form Errors: ${firstError.key} ${firstError.message}")
+        val message = "something bad happened" + newForm.errors.toString
         Redirect(routes.ProductsController.create()).flashing(Flash(form.data) +
-          ("error" -> "something bad happened"))
+          ("error" -> message))
       },
       success = { productData =>
         //success
-        val newProduct = Product(None, productData.name, productData.platformId, productData.version, productData.desc, None, None)
+        Logger.debug(s"Form Platform Seq ${productData.platformId.toString}")
+        val newProduct = Product(None, productData.name, productData.platformId(0).toInt, productData.version, productData.desc, None, None)
         Model.products += newProduct
         Redirect(routes.ProductsController.list).
           flashing("success" -> "success!")
@@ -81,7 +85,7 @@ object ProductsController extends Controller {
 
   def edit(id: Long) = DBAction{ implicit request =>
     val product = Model.products.filter(_.id === id).first
-    val filledData = new ProductData(product.name, product.platformId, product.version, product.description)
+    val filledData = new ProductData(product.name, Seq(product.platformId.toString), product.version, product.description)
     val filledForm = productForm.fill(filledData)
     Ok(views.html.products.edit(product,filledForm))
   }
@@ -95,7 +99,7 @@ object ProductsController extends Controller {
     success = { productData =>
       Model.products.filter(_.id === id)
         .map(p => ( p.name, p.platformId, p.version, p.description, p.updatedAt, p.createdAt))
-        .update(productData.name, productData.platformId, productData.version, productData.desc, Some(new Timestamp(System.currentTimeMillis)), None)
+        .update(productData.name, productData.platformId(0).toInt, productData.version, productData.desc, Some(new Timestamp(System.currentTimeMillis)), None)
       Redirect(routes.ProductsController.show(id))
     })
       

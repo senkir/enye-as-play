@@ -10,9 +10,10 @@
         @inputText(productForm("name"))
         <!-- @inputText(productForm("platform")) -->
         @select(
-            productForm("platform"), 
+            productForm("platformId[]"), 
             options = platforms,
-            '_label -> "Platforms"
+            '_label -> "Platforms",
+            '_default -> "** Select A Platform **"
         )
         @inputText(productForm("version"))
         @inputText(productForm("description"))
