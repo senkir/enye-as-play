@@ -1,9 +1,21 @@
-@(message: String, latest: List[Product])
+@(message: String, latest: Product, products: List[Product])
 
 @main(message, "Home") {
+
+} {
     @if(latest != null) {
-        @primary(latest)
-    } else {
-       <h1>No Data</h1>
+        @featured(latest)
     }
-}{ }
+
+    @if(products != null) {
+        <div class="products-grid">
+            <hr/>
+            @for(product <- products) {
+                @cell(product)
+            }
+        </div>
+        
+    } else {
+        <!-- leave empty -->
+    }
+}

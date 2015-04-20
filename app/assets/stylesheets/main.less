@@ -1,24 +1,156 @@
 //less
 
+//colors
+@white: #ffffff;
+@dark1: #333333;
+@dark2: #424242;
+@blue: #00CCD6;
+@light: #EFEFEF;
+@yellow: #FFD900;
+
+
+  @font-face {
+      font-family: 'poiret-one';
+      font-weight: normal;
+      font-style: normal;
+      src: url('../fonts/PoiretOne-Regular.ttf');
+  }
+
+  @font-face {
+      font-family: 'raleway';
+      font-weight: normal;
+      font-style: normal;
+      src: url('../fonts/Raleway-Regular.ttf');
+    }
+
+
+//styles
+
 body {
   font: Helvetica, sans-seriff;
   color: #333;
+  background: @light;
+  font-family: raleway;
 
-  #primary {
-    color: #ff0000;
-    img {
-      height: 150px;
-      width: 100%;
-    }
-
+  h1, h2 h3 {
+      color: @blue;
+      font-family: poiret-one;
   }
 
-  #footer{
+  .left-panel-style() {
+      background: @dark2;
+      color: @white;
+      min-height: 100%;
+      font-family: poiret-one;
+      padding-left: 10px;
+      padding-right: 10px;
+
+      a:link {
+          text-decoration: none;
+      }
+      a:visited {
+      }
+      a:hover {
+          background: @yellow;
+          h1 {
+              color: @dark1;
+          }
+
+          display: block;
+      }
+  }
+
+  @media(min-width: 560px) {
+      .left-panel {
+          float: left;
+          .left-panel-style;
+
+      }
+
+      .left-panel-alternate {
+          display: none;
+
+
+      }
+  }
+ 
+  //phone
+  @media(max-width: 560px) {
+      .left-panel {
+          display: none;
+
+      }
+ 
+      .left-panel-alternate {
+          width: 100%;
+          .left-panel-style;
+          text-align: center;
+          padding-bottom: 5px;
+          padding-top: 0px;
+      } 
+  }
+
+
+    //phone
+    @media(max-width: 560px) {
+        .content {
+         background: @light;
+        }
+    }
+    
+    @media(min-width: 560px) {
+        .content {
+            float: center;
+            padding-left: 150px;
+        }
+    }
+
+  .featured {
+    width: 100%;
+    color: @dark2;
+    background: @light;
+    margin-top: 15px;
+
+  @media(min-width: 560px) {
+    img {
+      max-height: 350px;
+      max-width: 450px;
+    }
+  }
+
+//phone
+   @media(max-width: 560px) {
+       .play-store-icon {
+           width: auto;
+            max-width: 450px;
+       }
+          img {
+              width: 100%;
+              max-height: 700px;
+          }
+      }
+  }
+
+  .footer{
+    background: @blue;
+
     p {
+        color: @light;
         padding: 10px;
         text-align: right;
         font-size: 8pt;
     }
+  }
+
+  .top-bar{
+    width: 100%;
+    background: @dark2;
+    text-align: center;
+    img{
+        max-width: 200px;
+        max-height: 60px;
+    }
+    padding-bottom: 0px;
   }
 
     .seed-button {
@@ -35,5 +167,21 @@ body {
         .alert alert-error {
             color: red;
         }
+    }
+
+    .product-grid-item {
+        
+    }
+
+    .products-grid {
+        background: @light;
+    }
+
+    .featured-sub-header {
+
+    }
+
+    .featured-description {
+        
     }
 }

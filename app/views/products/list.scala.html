@@ -1,6 +1,6 @@
 @(products: List[Product])(implicit flash: Flash)
 
-@main("Products", "Products"){
+@main("Products", "Products"){ } {
 @if(products.isEmpty) {
     <b>no data</b>
 }
@@ -11,4 +11,4 @@
 }
 
 @footer()
-}{ }
+}

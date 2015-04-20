@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#~0.5.4",
-    "paper-shadow": "Polymer/paper-shadow#~0.5.5"
+    "paper-shadow": "Polymer/paper-shadow#~0.5.5",
+    "core-menu": "Polymer/core-menu#~0.5.5"
   }
 }
