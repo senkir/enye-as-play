@@ -18,14 +18,16 @@ import play.api.Logger
  * Created by tcastillo on 2/26/15.
  */
 object ProductsController extends Controller {
-  case class ProductData(name: String, platformId: Seq[(String)], version: String, desc: Option[String])
+  case class ProductData(name: String, platformId: Seq[(String)], 
+    version: String, desc: Option[String], url: String)
 
   val productForm = Form(
     mapping(
       "name" -> nonEmptyText,
       "platformId[]" -> seq(text),
       "version" -> nonEmptyText,
-      "description" -> optional(text)
+      "description" -> optional(text),
+      "url" -> nonEmptyText
     )(ProductData.apply)(ProductData.unapply)
   )
 
@@ -70,7 +72,8 @@ object ProductsController extends Controller {
       success = { productData =>
         //success
         Logger.debug(s"Form Platform Seq ${productData.platformId.toString}")
-        val newProduct = Product(None, productData.name, productData.platformId(0).toInt, productData.version, productData.desc, None, None)
+        val newProduct = Product(None, productData.name, productData.platformId(0).toInt, 
+          productData.version, productData.desc, productData.url, None, None)
         Model.products += newProduct
         Redirect(routes.ProductsController.list).
           flashing("success" -> "success!")
@@ -85,7 +88,8 @@ object ProductsController extends Controller {
 
   def edit(id: Long) = DBAction{ implicit request =>
     val product = Model.products.filter(_.id === id).first
-    val filledData = new ProductData(product.name, Seq(product.platformId.toString), product.version, product.description)
+    val filledData = new ProductData(product.name, Seq(product.platformId.toString), 
+      product.version, product.description, product.url)
     val filledForm = productForm.fill(filledData)
     Ok(views.html.products.edit(product,filledForm))
   }
@@ -98,8 +102,11 @@ object ProductsController extends Controller {
     }, 
     success = { productData =>
       Model.products.filter(_.id === id)
-        .map(p => ( p.name, p.platformId, p.version, p.description, p.updatedAt, p.createdAt))
-        .update(productData.name, productData.platformId(0).toInt, productData.version, productData.desc, Some(new Timestamp(System.currentTimeMillis)), None)
+        .map(p => ( p.name, p.platformId, p.version, p.description, 
+          p.url, p.updatedAt, p.createdAt))
+        .update(productData.name, productData.platformId(0).toInt, 
+          productData.version, productData.desc, productData.url,
+          Some(new Timestamp(System.currentTimeMillis)), None)
       Redirect(routes.ProductsController.show(id))
     })
       

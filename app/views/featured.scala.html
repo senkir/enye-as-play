@@ -1,0 +1,25 @@
+@(featured: Product)
+
+<br/>
+
+<div class="featured">
+    <img class="banner" src="@routes.Assets.at("product/kelvim-feature-graphic.jpg")"></img>
+    <br/>
+
+    <h1>
+        @featured.name
+    </h1>
+    <p class="featured-sub-header">
+    @featured.version
+    @featured.updatedAt 
+    </p>
+    <p class="featured-description">
+        @featured.description
+    </p>
+
+    <br/>
+    <hr/>
+    Available in the play store
+    <a href="@featured.url"><img class="play-store-icon" src="@routes.Assets.at("images/en_generic_rgb_wo_45.png")"></img></a>
+</div>
+
