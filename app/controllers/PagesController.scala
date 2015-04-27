@@ -12,4 +12,12 @@ object Pages extends Controller {
   def about = Action { request =>
     Ok(views.html.pages.about())
   }
+
+  def contact = Action { request =>
+    Ok(views.html.pages.contact())
+  }
+
+  def fontAttribution = Action { request =>
+    Ok(views.html.pages.fontAttribution())
+  }
 }

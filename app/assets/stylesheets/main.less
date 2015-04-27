@@ -9,26 +9,12 @@
 @yellow: #FFD900;
 
 
-  @font-face {
-      font-family: 'poiret-one';
-      font-weight: normal;
-      font-style: normal;
-      src: url('../fonts/PoiretOne-Regular.ttf');
-  }
-
-  @font-face {
-      font-family: 'raleway';
-      font-weight: normal;
-      font-style: normal;
-      src: url('../fonts/Raleway-Regular.ttf');
-    }
-
 
   .left-panel-style() {
       background: @dark2;
       color: @white;
       min-height: 100%;
-      font-family: poiret-one;
+      font-family: 'Poiret One';
       padding-left: 10px;
       padding-right: 10px;
 
@@ -54,7 +40,7 @@ body {
     font: Helvetica, sans-seriff;
     color: #333;
     background: @light;
-    font-family: raleway;
+    font-family: Raleway;
     max-width: 1200px;
     display: block;
     margin-right: auto;
@@ -63,7 +49,7 @@ body {
 
   h1, h2 h3 {
       color: @blue;
-      font-family: poiret-one;
+      font-family: 'Poiret One';
   }
 
   .left-panel {
@@ -77,6 +63,13 @@ body {
   }
 
     .content {
+        p {
+            margin: 5px;
+        }
+
+        h1 {
+            margin: 5px;
+        }
 
     }
 
@@ -155,6 +148,15 @@ body {
     }
 
 
+ .circular {
+     width: 100px;
+     height: 100px;
+     border-radius: 150px;
+     -webkit-border-radius: 150px;
+     -moz-border-radius: 150px;
+     background: url('../images/coffee-portrait-100.jpg') no-repeat;
+ }
+
 
 }
 
@@ -187,3 +189,4 @@ body {
           max-height: 700px;
       }
 }
+

@@ -25,5 +25,6 @@ PUT /products/:id         controllers.ProductsController.update(id: Long)
 
 
 GET /privacyPolicy                  controllers.Pages.privacyPolicy()
-
+GET /contact                        controllers.Pages.contact()
+GET /fontAttribution                controllers.Pages.fontAttribution()
 GET /about                          controllers.Pages.about()
