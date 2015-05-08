@@ -1,6 +1,6 @@
 import play.PlayScala
 
-name := "play-scala"
+name := "enyeinteractive"
 
 version := "1.0"
 
