@@ -17,3 +17,5 @@ libraryDependencies ++= Seq(
   "org.slf4j" % "slf4j-nop" % "1.6.4",
   "com.typesafe.play" %% "play-slick" % "0.8.1"
 )
+
+libraryDependencies += "postgresql" % "postgresql" % "9.1-901-1.jdbc4"
